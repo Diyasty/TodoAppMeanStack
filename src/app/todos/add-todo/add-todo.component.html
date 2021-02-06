@@ -1,0 +1,42 @@
+<form
+  [formGroup]="validateForm"
+  (ngSubmit)="submitForm(f)"
+  nz-form
+  WS
+  class="login-form"
+  #f="ngForm"
+>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please Enter todo title">
+      <nz-input-group nzPrefixIcon="plus">
+        <input
+          type="text"
+          nz-input
+          placeholder="TITLE "
+          formControlName="title"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please Enter todo description !">
+      <nz-input-group nzPrefixIcon="comment">
+        <input
+          formControlName="description"
+          type="text"
+          nz-input
+          placeholder="DESCRIPTION"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <button
+    nz-button
+    nzDanger
+    style="background-color: #1890ff; color: #fff"
+    nzType="dashed"
+    type="submit"
+  >
+    ADD TODO
+  </button>
+</form>

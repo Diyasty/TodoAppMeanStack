@@ -1,0 +1,85 @@
+<h1 style="margin-left: 30px">List Of Todos</h1>
+<div class="spiner">
+  <nz-spin
+    sty
+    nzSimple
+    [nzSize]="'large'"
+    [nzSpinning]="!listOfData$"
+  ></nz-spin>
+</div>
+<nz-table
+  *ngIf="listOfData$"
+  #basicTable
+  [nzData]="listOfData$ | async"
+  [nzPageSize]="3"
+  [nzPageIndex]="1"
+>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>
+        Edit <nz-divider nzType="vertical"></nz-divider>
+        Delete
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of listOfData$ | async">
+      <td>{{ data.title }}</td>
+      <td>{{ data.description }}</td>
+      <td>{{ data.status ? "Complete" : "On Progress" }}</td>
+      <td>
+        <a (click)="showModal(data)"
+          ><i nz-icon nzType="edit" nzTheme="fill"></i> Edit</a
+        >
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="error(data.id)"
+          ><i nz-icon nzType="delete" nzTheme="fill"></i> Delete
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="{{ title }}"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
+  <div *nzModalContent>
+    <form nz-form WS class="login-form" #f="ngForm">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please Enter todo title">
+          <nz-input-group nzPrefixIcon="plus">
+            <input
+              type="text"
+              nz-input
+              placeholder="TITLE "
+              name="title"
+              [(ngModel)]="title"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please Enter todo description !">
+          <nz-input-group nzPrefixIcon="comment">
+            <input
+              name="description"
+              type="text"
+              nz-input
+              placeholder="DESCRIPTION"
+              [(ngModel)]="description"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <label nz-checkbox name="checkbox" [(ngModel)]="status">Complete</label>
+      </nz-form-item>
+    </form>
+  </div>
+</nz-modal>

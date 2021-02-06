@@ -1,0 +1,168 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <a>
+        <i nz-icon nzType="double-right" nzTheme="outline"></i>
+        <h1>Todo App</h1>
+      </a>
+    </div>
+    <ul
+      nz-menu
+      nzTheme="dark"
+      nzMode="inline"
+      [nzInlineCollapsed]="isCollapsed"
+    >
+      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+        <ul>
+          <li nz-menu-item>
+            <i nz-icon nzType="snippets" nzTheme="outline"></i>
+            <a
+              [routerLink]="['/todos']"
+              routerLinkActiveOptions="{ exact: true }"
+              >Todos</a
+            >
+          </li>
+          <li nz-menu-item>
+            <i nz-icon nzType="plus" nzTheme="outline"></i>
+            <a [routerLink]="['/todos/add']">Add Todos </a>
+          </li>
+          <!-- <li nz-menu-item nzMatchRouter>
+          <i nz-icon nzType="form" nzTheme="outline"></i>
+          <a>Edit Todos</a>
+        </li> -->
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="User Profile" nzIcon="form">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+            <a>Profile</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <ul nz-menu nzMode="horizontal">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <i
+            class="trigger"
+            nz-icon
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></i>
+        </span>
+        <li
+          nz-menu-item
+          nzSelected
+          [routerLink]="['/']"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="ant-menu-item-selected-route"
+        >
+          <i nz-icon nzType="home" nzTheme="outline"></i>
+          Home
+        </li>
+        <li
+          nz-menu-item
+          [routerLink]="['/todos']"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="ant-menu-item-selected-route"
+        >
+          <i nz-icon nzType="user"></i>
+          Todos
+        </li>
+
+        <button
+          *ngIf="!isUser"
+          nz-button
+          nzType="default"
+          class="btn-signin"
+          nzShape="round"
+          [routerLink]="['/auth/login']"
+        >
+          <i nz-icon nzType="login"></i>Sign In
+        </button>
+        <button
+          *ngIf="!isUser"
+          nz-button
+          nzType="primary"
+          class="btn-newaccount"
+          nzShape="round"
+          [routerLink]="['/auth/register']"
+        >
+          <i nz-icon nzType="user-add"></i>Create new account
+        </button>
+        <nz-avatar
+          *ngIf="isUser"
+          nz-dropdown
+          nzTrigger="click"
+          [nzDropdownMenu]="menu"
+          nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          nzIcon="user"
+        ></nz-avatar>
+        <span nz-dropdown *ngIf="isUser"> Mohamed Eldiyasty</span>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu class="profile-dropdown">
+            <li
+              [routerLink]="['/todos/add']"
+              nz-menu-item
+              style="margin: 10px; padding: 10px; font-weight: bold"
+            >
+              <i nz-icon nzType="appstore-add" nzTheme="outline"></i>Create new
+              Todo
+            </li>
+            <li nz-menu-divider></li>
+
+            <li nz-menu-group nzTitle="Account">
+              <ul>
+                <li nz-menu-item style="font-weight: 700">
+                  <i nz-icon nzType="user" nzTheme="outline"></i>Profile
+                </li>
+
+                <li nz-menu-divider></li>
+
+                <button
+                  (click)="logout()"
+                  nz-button
+                  nzType="primary"
+                  [nzSize]="'small'"
+                  style="
+                    width: 100%;
+                    height: 30px;
+                    padding-right: 15px;
+                    margin: 10px 0 10px 0;
+                  "
+                >
+                  <i nz-icon nzType="logout" nzTheme="outline"></i>
+                  Logout
+                </button>
+              </ul>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </ul>
+
+      <!-- <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <i
+            class="trigger"
+            nz-icon
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></i>
+        </span>
+      </div> -->
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
