@@ -1,3 +1,5 @@
+import { TodosEffect } from './todos/effects/todos.effect';
+import { AuthEffects } from './auth/effects/Auth.effect';
 import { TodosState } from './todos/index';
 import { TodosReducer } from './todos/reducers/todosReducer';
 import { AuthState } from './auth/index';
@@ -23,12 +25,12 @@ const reducers: ActionReducerMap<AppState> = {
 @NgModule({
   imports: [
     CommonModule,
+    EffectsModule.forRoot([AuthEffects, TodosEffect]),
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([]),
   ],
 })
 export class AppStoreModule {}

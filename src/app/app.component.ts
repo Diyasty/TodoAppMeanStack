@@ -1,3 +1,7 @@
+import { map } from 'rxjs/operators';
+import { AuthActions } from './store/auth/actions/Auth.action';
+import { isAuthenticated } from './store/auth/index';
+import { Observable, of } from 'rxjs';
 import { AppState } from './store/app-store.module';
 import { Store } from '@ngrx/store';
 import { AuthService } from './auth/auth.service';
@@ -10,18 +14,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   constructor(private auth: AuthService, private store: Store<AppState>) {}
-  isUser!: boolean;
-
+  isUser!: Observable<boolean>;
+  User!: boolean;
+  isLoading!: boolean;
   ngOnInit(): void {
-    console.log(this.isUser);
-    this.auth.getAuthStatusListener().subscribe((user) => (this.isUser = user));
-    this.isUser = !!localStorage.getItem('user');
-    console.log(this.isUser);
+    this.isUser = this.store.select(isAuthenticated);
+    this.store.dispatch(AuthActions.AutoLogin());
+    // console.log(this.isUser);
   }
   logout() {
-    console.log('//#logout ');
-
-    this.auth.logout();
+    this.isLoading = true;
+    setTimeout(() => {
+      this.store.dispatch(AuthActions.logout());
+      this.auth.logout();
+      this.isLoading = false;
+    }, 3000);
   }
   isCollapsed = false;
 }

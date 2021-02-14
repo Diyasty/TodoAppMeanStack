@@ -16,7 +16,6 @@ import { RegisterComponent } from './register/register.component';
     NgZorroAntdModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
   ],
 })
 export class AuthModule {}

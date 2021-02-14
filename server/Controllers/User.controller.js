@@ -8,9 +8,10 @@ const login = async (req, res) => {
     const login = await User.login(email, password);
     const token = Token.CreateToken(login);
     res.header("Authorization", "Bearer " + token);
-    res.json({ user: login, token });
+    res.json({ ...login, token: token });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.log(error);
+    res.status(400).json({ message: "Wrong Email Or Password " });
   }
 };
 const register = async (req, res) => {

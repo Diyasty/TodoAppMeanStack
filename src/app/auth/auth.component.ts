@@ -1,3 +1,4 @@
+import { map, exhaustMap, tap } from 'rxjs/operators';
 import { AuthActions } from './../store/auth/actions/Auth.action';
 import { AuthService, ILogin } from './auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -20,7 +21,8 @@ export class AuthComponent implements OnInit {
     private readonly store: Store<AppState>
   ) {}
   Data!: ILogin;
-  errMassage!: Observable<string>;
+  isLoading!: boolean;
+  errMassage!: Observable<any>;
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       email: [null, [Validators.required]],
@@ -38,8 +40,14 @@ export class AuthComponent implements OnInit {
       email: this.validateForm.value.email,
       password: this.validateForm.value.password,
     };
-    this.store.dispatch(AuthActions.login(this.Data));
-    this.AuthSer.login(this.Data);
-    this.errMassage = this.store.select(errorMassage);
+    console.log('change ');
+
+    this.isLoading = true;
+    this.store.dispatch(AuthActions.login({ user: this.Data }));
+    setTimeout(() => {
+      // this.errMassage = this.store.select(errorMassage);
+      this.isLoading = false;
+      this.errMassage = this.store.select(errorMassage);
+    }, 3000);
   }
 }

@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { AuthActions } from '../store/auth/actions/Auth.action';
 import { AppState } from '../store/app-store.module';
 import { errorMassage } from '../store/auth';
+import { ResponseData } from '../models/response';
 export interface ILogin {
   email: string;
   password: string;
@@ -30,31 +31,32 @@ export class AuthService {
     return this.token || localStorage.getItem('token');
   }
 
-  login(data: ILogin) {
-    return this.http
-      .post(`${environment.BASEURL}/auth/login`, data)
-      .pipe(shareReplay())
-      .subscribe(
-        (response: any) => {
-          this.token = response.token;
-          this.setItem(response.token, response.user);
-          this.authStatusListener.next(true);
-          this.isAuthenticated = true;
-          this.store.dispatch(
-            AuthActions.loginSuccess({
-              user: response.user,
-              token: response.token,
-            })
-          );
-          this.r.navigate(['/todos']);
-        },
-        (error) => {
-          console.log(error);
-          this.store.dispatch(AuthActions.loginError(error));
-          this.errMassage = this.store.select(errorMassage);
-          this.authStatusListener.next(false);
-        }
-      );
+  login(data: ILogin): Observable<ResponseData> {
+    return this.http.post<ResponseData>(
+      `${environment.BASEURL}/auth/login`,
+      data
+    );
+    // .subscribe(
+    //   (response: any) => {
+    //     this.token = response.token;
+    //     this.setItem(response.token, response.user);
+    //     this.authStatusListener.next(true);
+    //     this.isAuthenticated = true;
+    //     this.store.dispatch(
+    //       AuthActions.loginSuccess({
+    //         user: response.user,
+    //         token: response.token,
+    //       })
+    //     );
+    //     this.r.navigate(['/todos']);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //     this.store.dispatch(AuthActions.loginError(error));
+    //     this.errMassage = this.store.select(errorMassage);
+    //     this.authStatusListener.next(false);
+    //   }
+    // );
 
     // .subscribe((data: any) => {
     //   this.token = data.token;
@@ -67,17 +69,20 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
   getIsAuth() {
-    return this.isAuthenticated;
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const user = JSON.parse(userData);
+      return user;
+    }
+    return null;
   }
 
-  private setItem(token: string, user: {}) {
-    localStorage.setItem('token', token);
+  setItem(user: ResponseData) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
   logout() {
     this.authStatusListener.next(false);
-    localStorage.clear();
-    this.r.navigate(['/auth/login']);
+    localStorage.removeItem('user');
   }
 }

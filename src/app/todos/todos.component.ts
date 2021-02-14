@@ -46,7 +46,7 @@ export class TodosComponent implements OnInit {
       title: [null, [Validators.required]],
       description: [null, [Validators.required]],
     });
-
+    this.store.dispatch(TodosActions.getAllTodos());
     // this.http
     //   .get(`${environment.BASEURL}/todos/userTodos`, this.header)
     //   .subscribe((data) => {
