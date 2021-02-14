@@ -76,11 +76,16 @@ export class AuthService {
     }
     return null;
   }
-
+  /**
+   * !set items in local storage
+   */
   setItem(user: ResponseData) {
     localStorage.setItem('user', JSON.stringify(user));
   }
-
+  /**
+   * @logout
+   *
+   */
   logout() {
     this.authStatusListener.next(false);
     localStorage.removeItem('user');
