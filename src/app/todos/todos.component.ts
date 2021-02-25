@@ -1,9 +1,7 @@
 import { Todo } from './../models/Todo.model';
-import { TODOS } from './../store/todos/index';
 import { TodosActions } from './../store/todos/actions/todos.action';
 import { AppState } from './../store/app-store.module';
 import { AuthService } from './../auth/auth.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,6 +10,7 @@ import { map, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
@@ -20,7 +19,6 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class TodosComponent implements OnInit {
   listOfData$!: Observable<Todo[]>;
   User$!: Observable<boolean>;
-  Todo$!: Todo;
   title: any;
   description: any;
   id!: any;
@@ -41,7 +39,9 @@ export class TodosComponent implements OnInit {
       description: [null, [Validators.required]],
     });
 
-    // .subscribe((data: Todo[]) => (this.listOfData$ = data));
+    this.store.subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
   submitForm(title: string, description: string) {}
@@ -103,7 +103,6 @@ export class TodosComponent implements OnInit {
       status: this.status,
     };
     this.isOkLoading = true;
-    this.store.dispatch(TodosActions.UpdateTodo({ todo }));
     setTimeout(() => {
       this.isVisible = false;
       this.isOkLoading = false;

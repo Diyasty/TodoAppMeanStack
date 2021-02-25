@@ -9,9 +9,9 @@ export const todoAdapter = createEntityAdapter<Todo>();
 
 export const TodosInitialState: TodosState = todoAdapter.getInitialState();
 
-export const todosFeature = (state: AppState) => state.todos;
+// export const todosFeature = (state: AppState) => state.todos;
 
-export const TODOS = createSelector(
-  todosFeature,
-  (state: TodosState) => state.todos
-);
+// export const TODOS = createSelector(
+//   todosFeature,
+//   (state: TodosState) => state.todos
+// );

@@ -1,11 +1,4 @@
-<form
-  [formGroup]="validateForm"
-  (ngSubmit)="submitForm(f)"
-  nz-form
-  WS
-  class="login-form"
-  #f="ngForm"
->
+<form [formGroup]="validateForm" nz-form WS class="login-form" #f="ngForm">
   <nz-form-item>
     <nz-form-control nzErrorTip="Please Enter todo title">
       <nz-input-group nzPrefixIcon="plus">

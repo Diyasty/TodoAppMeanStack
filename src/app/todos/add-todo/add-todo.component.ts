@@ -27,17 +27,17 @@ export class AddTodoComponent implements OnInit {
     });
   }
 
-  submitForm(form: NgForm) {
-    const todo = {
-      title: this.validateForm.value.title,
-      description: this.validateForm.value.description,
-    };
-    this.store.dispatch(TodosActions.AddTodo({ todos: todo }));
-    // this.http.post(`${environment.BASEURL}/todos/add`, todo).subscribe(
-    //   (res) => console.log(res),
-    //   (err) => console.log(err)
-    // );
-    form.reset();
-    this._router.navigate(['/todos']);
-  }
+  // submitForm(form: NgForm) {
+  //   const todo = {
+  //     title: this.validateForm.value.title,
+  //     description: this.validateForm.value.description,
+  //   };
+  //   this.store.dispatch(TodosActions.AddTodo({ todo: todo }));
+  //   // this.http.post(`${environment.BASEURL}/todos/add`, todo).subscribe(
+  //   //   (res) => console.log(res),
+  //   //   (err) => console.log(err)
+  //   // );
+  //   form.reset();
+  //   this._router.navigate(['/todos']);
+  // }
 }
