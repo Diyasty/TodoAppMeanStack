@@ -1,4 +1,10 @@
-<form [formGroup]="validateForm" nz-form WS class="login-form" #f="ngForm">
+<form
+  [formGroup]="validateForm"
+  (ngSubmit)="submitForm()"
+  nz-form
+  WS
+  class="login-form"
+>
   <nz-form-item>
     <nz-form-control nzErrorTip="Please Enter todo title">
       <nz-input-group nzPrefixIcon="plus">
@@ -30,6 +36,6 @@
     nzType="dashed"
     type="submit"
   >
-    ADD TODO
+    ADD Todo
   </button>
 </form>

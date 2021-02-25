@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpClient } from '@angular/common/http';
+import { TODOS } from '../store/todos';
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
@@ -38,10 +39,7 @@ export class TodosComponent implements OnInit {
       title: [null, [Validators.required]],
       description: [null, [Validators.required]],
     });
-
-    this.store.subscribe((data: any) => {
-      console.log(data);
-    });
+    this.listOfData$ = this.store.select(TODOS);
   }
 
   submitForm(title: string, description: string) {}

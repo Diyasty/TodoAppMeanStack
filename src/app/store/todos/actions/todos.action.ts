@@ -5,6 +5,10 @@ import { Update } from '@ngrx/entity';
 const getAllTodos = createAction('[Todos Page] get all todos');
 
 const AddTodo = createAction('[Todos Page] Add Todo ', props<{ todo: Todo }>());
+const AddTodoSuccess = createAction(
+  '[Todos Page] Add Todo Success ',
+  props<{ todo: Todo }>()
+);
 
 // const UpdateTodo = createAction(
 //   '[Todos Page] Update Todo ',
@@ -18,6 +22,7 @@ const DeleteTodo = createAction(
 export const TodosActions = {
   getAllTodos,
   // UpdateTodo,
+  AddTodoSuccess,
   DeleteTodo,
   AddTodo,
 };

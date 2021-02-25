@@ -8,21 +8,21 @@ import { TodosActions } from '../actions/todos.action';
 export class TodosEffect {
   constructor(private todosService: TodosService, private action$: Actions) {}
 
-  AddTodos$ = createEffect(
-    () => {
-      return this.action$.pipe(
-        ofType(TodosActions.AddTodo),
-        mergeMap((action) => {
-          return this.todosService.AddTodo(action.todo).pipe(
-            map((data) => {
-              console.log(data);
-            })
-          );
-        })
-      );
-    },
-    {
-      dispatch: false,
-    }
-  );
+  AddTodos$ = createEffect(() => {
+    return this.action$.pipe(
+      ofType(TodosActions.AddTodo),
+      mergeMap((action) => {
+        return this.todosService.AddTodo(action.todo).pipe(
+          map((data: any) => {
+            console.log(data);
+
+            const todo = { ...action.todo, id: data._id };
+            console.log(todo);
+
+            return TodosActions.AddTodoSuccess({ todo: todo });
+          })
+        );
+      })
+    );
+  });
 }
