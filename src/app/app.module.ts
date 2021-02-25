@@ -25,6 +25,7 @@ registerLocaleData(en);
   declarations: [AppComponent],
   imports: [
     ReactiveFormsModule,
+    TodosModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

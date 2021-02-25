@@ -18,12 +18,6 @@ import { NzModalService } from 'ng-zorro-antd/modal';
   styleUrls: ['./todos.component.scss'],
 })
 export class TodosComponent implements OnInit {
-  header = {
-    headers: new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.Auth.getToken}`
-    ),
-  };
   listOfData$!: Observable<Todo[]>;
   User$!: Observable<boolean>;
   Todo$!: Todo;
@@ -46,21 +40,11 @@ export class TodosComponent implements OnInit {
       title: [null, [Validators.required]],
       description: [null, [Validators.required]],
     });
-    this.store.dispatch(TodosActions.getAllTodos());
-    // this.http
-    //   .get(`${environment.BASEURL}/todos/userTodos`, this.header)
-    //   .subscribe((data) => {
-    //     this.listOfData$ = of(data);
-    //   });
-    console.log('its works ', typeof this.store.select(TODOS).subscribe());
-    this.listOfData$ = this.store.select(TODOS);
+
     // .subscribe((data: Todo[]) => (this.listOfData$ = data));
   }
 
-  submitForm(title: string, description: string) {
-    const todo = { title, description, status: false };
-    console.log(todo);
-  }
+  submitForm(title: string, description: string) {}
   isVisibleTop = false;
   isVisibleMiddle = false;
 
