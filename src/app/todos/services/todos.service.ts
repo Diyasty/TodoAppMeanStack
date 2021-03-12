@@ -11,11 +11,14 @@ export class TodosService {
   constructor(private _http: HttpClient) {}
 
   getAllTodos(): Observable<Todo[]> {
-    console.log('inservise');
     return this._http.get<Todo[]>(`${environment.BASEURL}/todos/userTodos`);
   }
 
-  AddTodo(todo: Todo): Observable<Todo> {
-    return this._http.post<Todo>(`${environment.BASEURL}/todos/add`, todo);
+  AddTodo(todo: Todo): Observable<{ id: string }> {
+    return this._http.post<{ id: string }>(
+      `${environment.BASEURL}/todos/add`,
+      todo
+    );
   }
+  removeTodo(todo: Todo): void {}
 }

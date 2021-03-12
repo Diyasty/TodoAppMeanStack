@@ -1,5 +1,5 @@
 import { NgZorroAntdModule } from './../ng-zorro-antd.module';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TodosRoutingModule } from './todos-routing.module';

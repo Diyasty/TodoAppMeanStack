@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Todo } from 'src/app/models/Todo.model';
 
 @Component({
   selector: 'app-add-todo',
@@ -27,17 +28,17 @@ export class AddTodoComponent implements OnInit {
     });
   }
 
-  submitForm(form: NgForm) {
-    const todo = {
+  submitForm() {
+    const todo: Todo = {
       title: this.validateForm.value.title,
       description: this.validateForm.value.description,
     };
-    this.store.dispatch(TodosActions.AddTodo({ todos: todo }));
+    this.store.dispatch(TodosActions.AddTodo({ todo: todo }));
     // this.http.post(`${environment.BASEURL}/todos/add`, todo).subscribe(
     //   (res) => console.log(res),
     //   (err) => console.log(err)
     // );
-    form.reset();
+    this.validateForm.reset();
     this._router.navigate(['/todos']);
   }
 }

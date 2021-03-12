@@ -20,6 +20,7 @@ export class AuthEffects {
   login$ = createEffect(() => {
     return this.Action$.pipe(
       ofType(AuthActions.login),
+      
       exhaustMap((action) => {
         return this.AuthSer.login(action.user).pipe(
           map((data: any) => {
